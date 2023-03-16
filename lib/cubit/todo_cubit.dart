@@ -1,21 +1,35 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:meta/meta.dart';
 
-// part 'todo_state.dart';
+part 'todo_state.dart';
 
-class TodoCubit extends Cubit<List<String>> {
-  TodoCubit() : super([]);
+class TodoCubit extends Cubit<TodoState> with HydratedMixin {
+  TodoCubit() : super(TodoState(tasks: []));
 
   void add(String value) {
-    emit([...state, value]);
-    print(state.length);
+    print(state.tasks.length);
+    state.tasks.add(value);
+    emit(TodoState(tasks: state.tasks));
   }
 
   void remove(int index) {
-    state.removeAt(index);
-    emit([...state]);
-    print(state.length);
+    print(state.tasks.length);
+    state.tasks.removeAt(index);
+    emit(TodoState(tasks: state.tasks));
+  }
+
+  @override
+  TodoState? fromJson(Map<String, dynamic> json) {
+    return TodoState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(TodoState state) {
+    return state.toMap();
   }
 }

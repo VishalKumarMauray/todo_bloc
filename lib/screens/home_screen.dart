@@ -14,7 +14,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     reference = BlocProvider.of<TodoCubit>(context);
   }
@@ -41,27 +40,25 @@ class _MyHomePageState extends State<MyHomePage> {
                 IconButton(
                   onPressed: () {
                     reference.add(textInput.text);
-                    print(textInput.text);
-                    // setState(() {});
                   },
                   icon: const Icon(Icons.add),
                 ),
               ],
             ),
             const SizedBox(height: 16),
-            BlocBuilder<TodoCubit, List<String>>(
+            BlocBuilder<TodoCubit, TodoState>(
               builder: (context, state) {
                 return Expanded(
                   child: ListView.builder(
                     shrinkWrap: true,
-                    itemCount: state.length,
+                    itemCount: state.tasks.length,
                     itemBuilder: (context, index) {
                       return Container(
                         margin: const EdgeInsets.all(8),
                         color: Colors.amber,
                         child: Row(
                           children: [
-                            Text(state[index]),
+                            Text(state.tasks[index]),
                             IconButton(
                                 onPressed: () {
                                   reference.remove(index);

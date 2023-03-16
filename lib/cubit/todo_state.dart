@@ -1,36 +1,29 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-// part of 'todo_cubit.dart';
 
-// @immutable
-// abstract class TodoState {
-//   int listLength;
-//   String itemName;
-//   TodoState(
-//     this.listLength,
-//     this.itemName,
-//   );
+part of 'todo_cubit.dart';
 
-//   @override
-//   List<Object?> get props => [listLength, itemName];
-// }
+class TodoState {
+  List<String> tasks;
+  TodoState({required this.tasks});
 
-// class TodoLoading extends TodoState {
-//   TodoLoading(super.listLength, super.itemName);
+  @override
+  String toString() => '$tasks';
 
-//   @override
-//   String toString() => 'loading';
-// }
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'tasks': tasks,
+    };
+  }
 
-// class TodoAdd extends TodoState {
-//   TodoAdd(super.listLength, super.itemName);
+  factory TodoState.fromMap(Map<String, dynamic> map) {
+    return TodoState(
+        tasks: List<String>.from(
+      (map['tasks'] as List<String>),
+    ));
+  }
 
-//   @override
-//   String toString() => 'Add $itemName at $listLength';
-// }
+  String toJson() => json.encode(toMap());
 
-// class TodoDone extends TodoState {
-//   TodoDone(super.listLength, super.itemName);
-
-//   @override
-//   String toString() => '$itemName at $listLength is Done';
-// }
+  factory TodoState.fromJson(String source) =>
+      TodoState.fromMap(json.decode(source) as Map<String, dynamic>);
+}

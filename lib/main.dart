@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
     return BlocProvider<TodoCubit>(
       create: (context) => TodoCubit(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'To Do',
         theme: ThemeData(
           primarySwatch: Colors.blue,
